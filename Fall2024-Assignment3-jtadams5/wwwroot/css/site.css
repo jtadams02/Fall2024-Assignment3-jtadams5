@@ -1,0 +1,55 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #14171C;
+    color: #ffffff;
+}
+
+.form-group {
+    margin-bottom:5px;
+}
+
+.index-title {
+    text-align: center;
+}
+
+.btn-row {
+    display:flex;
+    justify-content: center;
+    gap:15px
+}
+
+.a-btn {
+    background-color: #e50914; /* Red background for buttons */
+    color: white; /* White text color */
+    padding: 8px 12px; /* Space inside button */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 4px; /* Rounded button corners */
+    margin: 0px 5px; /* Space between buttons */
+    margin-bottom: 5px;
+    transition: background-color 0.2s; /* Smooth background transition */
+}
+    /* Button hover effects */
+    .a-btn:hover {
+        background-color: #b00711; /* Darker red on hover */
+        color: white;
+    }
+

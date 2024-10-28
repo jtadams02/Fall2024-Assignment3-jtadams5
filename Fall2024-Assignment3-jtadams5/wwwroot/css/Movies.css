@@ -1,0 +1,100 @@
+﻿.index-container {
+    width: 100%;
+}
+/* Main container for the movie cards */
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between movie cards */
+    justify-content: center; /* Center the cards */
+    align-content: center;
+    padding: 20px; /* Padding around the container */
+    background-color: #14171C; /* Dark background color */
+    width: 100%;
+}
+
+/* Individual movie card */
+.movie-card {
+    background-color: #1f1f1f; /* Darker card background */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensure content doesn't overflow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    width: 300px; /* Fixed width for each movie card */
+    margin: 10px;
+    text-align: center; /* Center text inside the card */
+    transition: transform 0.2s; /* Smooth hover effect */
+}
+
+    /* Hover effect for movie cards */
+    .movie-card:hover {
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+/* Image for the movie poster */
+.movie-poster {
+    width: 100%; /* Image takes the full width */
+    height: 500px; /* Maintain aspect ratio */
+    object-fit: cover;
+}
+
+/* Movie title styling */
+.movie-title {
+    color: #ffffff; /* White text for title */
+    font-size: 1.2em; /* Larger font size */
+    margin: 0px 0px; /* Margin above and below */
+    font-weight: bold; /* Bold title */
+}
+
+/* Action buttons container */
+.movie-actions {
+    padding: 10px; /* Space around action buttons */
+}
+
+/* Base styling for buttons */
+.btn {
+    background-color: #e50914; /* Red background for buttons */
+    color: white; /* White text color */
+    padding: 8px 12px; /* Space inside button */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 4px; /* Rounded button corners */
+    margin: 0px 5px; /* Space between buttons */
+    margin-bottom: 5px;
+    transition: background-color 0.2s; /* Smooth background transition */
+}
+
+    /* Button hover effects */
+    .btn:hover {
+        background-color: #b00711; /* Darker red on hover */
+    }
+
+/* Delete button specific styling */
+.delete-btn {
+    background-color: #dc3545; /* Red for delete button */
+}
+
+    .delete-btn:hover {
+        background-color: #c82333; /* Darker red on hover */
+    }
+
+.bg-details {
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/1200px-HD_transparent_picture.png)
+
+}
+
+.details {
+    display: flex;
+    height: 600px;
+
+}
+
+.details-poster {
+    width:100%;
+    height:auto;
+}
+
+/* Optional: Global body styles */
+body {
+    background-color: #14171C; /* Dark background for the whole body */
+    color: #ffffff; /* White text for body */
+    font-family: 'Arial', sans-serif; /* Clean font */
+}

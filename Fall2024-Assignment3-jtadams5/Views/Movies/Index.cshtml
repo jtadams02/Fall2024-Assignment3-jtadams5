@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Fall2024_Assignment3_jtadams5.Models.Movie>
+@{
+    ViewData["Title"] = "Movies Index";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/Movies.css"/>
+}
+<div class="index-container">
+    <h2 class="index-title">Movies List</h2>
+    <p style="text-align:center">
+        <a asp-action="Create" class="btn">Add a Movie</a>
+    </p>
+
+    <div class="movie-container">
+        @foreach (var movie in Model.OrderBy(o => o.Title))
+        {
+            <div class="movie-card">
+                <img src="@movie.PosterURL" alt="@movie.Title Poster" class="movie-poster" />
+                <h4>@movie.Title</h4>
+                <div class="movie-actions">
+                    <a asp-action="Details" asp-route-id="@movie.MovieID" class="btn">Details</a>
+                    <a asp-action="Edit" asp-route-id="@movie.MovieID" class="btn">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@movie.MovieID" class="btn">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
