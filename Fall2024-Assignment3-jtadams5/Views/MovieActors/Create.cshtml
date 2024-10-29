@@ -1,0 +1,37 @@
+﻿@model Fall2024_Assignment3_jtadams5.Models.MovieActor
+
+@{
+    ViewData["Title"] = "Link Actor to Movie";
+}
+
+<h2>Link Actor to Movie</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="actorId">Select Actor</label>
+        <select id="actorId" name="actorId" class="form-control">
+            <option value="">-- Select Actor --</option>
+            @foreach (var actor in ViewBag.Actors)
+            {
+                <option value="@actor.ActorID">@actor.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="movieId">Select Movie</label>
+        <select id="movieId" name="movieId" class="form-control">
+            <option value="">-- Select Movie --</option>
+            @foreach (var movie in ViewBag.Movies)
+            {
+                <option value="@movie.MovieID">@movie.Title</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Link Actor to Movie</button>
+</form>
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+

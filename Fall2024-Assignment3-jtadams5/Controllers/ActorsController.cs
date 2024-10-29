@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Fall2024_Assignment3_jtadams5.Data;
 using Fall2024_Assignment3_jtadams5.Models;
+using VaderSharp2;
+using Fall2024_Assignment3_jtadams5.Services;
 
 namespace Fall2024_Assignment3_jtadams5.Controllers
 {
     public class ActorsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _config;
+        private readonly OpenAIService _openAIService;
 
-        public ActorsController(ApplicationDbContext context)
+        public ActorsController(ApplicationDbContext context, IConfiguration config, OpenAIService openAIService)
         {
             _context = context;
+            _config = config; // Hope this works?
+            _openAIService = openAIService;
         }
 
         // GET: Actors
@@ -33,11 +39,25 @@ namespace Fall2024_Assignment3_jtadams5.Controllers
                 return NotFound();
             }
 
-            var actor = await _context.Actors
+            var actor = await _context.Actors.Include(m => m.MovieActors).ThenInclude(mm => mm.Movie)
                 .FirstOrDefaultAsync(m => m.ActorID == id);
+            
+
             if (actor == null)
             {
                 return NotFound();
+            }
+            if (actor.Reviews == null)
+            {
+                ViewBag.FakeTweets = new string[] { "Error" };
+                ViewBag.Sentiment = "Error";
+            } else
+            {
+                string[] tweetArray = actor.Reviews.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                var anal = new SentimentIntensityAnalyzer();
+                SentimentAnalysisResults sentiment = anal.PolarityScores(actor.Reviews); // I think we will just calculate it here always
+                ViewBag.FakeTweets = tweetArray;
+                ViewBag.Sentiment = sentiment.ToString();
             }
 
             return View(actor);
@@ -56,6 +76,10 @@ namespace Fall2024_Assignment3_jtadams5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ActorID,Name,Gender,Age,imdbURL,photoURL")] Actor actor)
         {
+
+            var tweets = await _openAIService.GetFakeActorTweetsAsync(actor.Name);
+
+            actor.Reviews = tweets;
             if (ModelState.IsValid)
             {
                 _context.Add(actor);
@@ -97,7 +121,19 @@ namespace Fall2024_Assignment3_jtadams5.Controllers
             {
                 try
                 {
-                    _context.Update(actor);
+
+                    var actorToUpdate = await _context.Actors.FindAsync(id);
+                    if (actorToUpdate == null) return NotFound();
+
+                    // Set the fields that can be updated
+                    actorToUpdate.Name = actor.Name;
+                    actorToUpdate.Gender = actor.Gender;
+                    actorToUpdate.Age = actor.Age;
+                    actorToUpdate.photoURL = actor.photoURL;
+                    actorToUpdate.imdbURL = actor.imdbURL;
+
+                    // Keep the existing Reviews value
+                    _context.Update(actorToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

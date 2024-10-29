@@ -1,48 +1,79 @@
 ﻿@model Fall2024_Assignment3_jtadams5.Models.Actor
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Name"] = "Details";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies.css" />
+}
+<div class="bg-details" style="background-image: url(@ViewBag.BackgroundImage);">
+    <div class>
+        <h1>Details for <i><u>@Html.DisplayFor(model => model.Name)</u></i></h1>
 
-<h1>Details</h1>
+        <div class="details">
+            <hr />
+            <img src="@Html.DisplayFor(model => model.photoURL)" alt="@Html.DisplayFor(model => model.Name)" class="details-poster">
+            <div class="details-layout">
+                <div>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Gender)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Gender)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Age)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Age)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.photoURL)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.photoURL)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.imdbURL)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.imdbURL)
+                        </dd>
+                    </dl>
+                </div>
+                <hr />
+                <div class="reviews-actors">
+                    <div class="fake-tweets">
 
-<div>
-    <h4>Actor</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.imdbURL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.imdbURL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.photoURL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.photoURL)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ActorID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                        <h4><u>Reviews - @ViewBag.Sentiment</u></h4>
+                        @foreach (var tweet in ViewBag.FakeTweets)
+                        {
+                            <div class="fake-tweet">
+                                <p>@tweet - Anonymous</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="actors">
+                        <h4><u>Movies</u></h4>
+                        @foreach (var movieActor in Model.MovieActors)
+                        {
+                            <p>@movieActor.Movie.Title</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <a asp-action="Edit" asp-route-id="@Model?.ActorID" class="a-btn">Edit</a>
+            <a asp-action="Index" class="a-btn">Back to List</a>
+        </div>
+    </div>
 </div>

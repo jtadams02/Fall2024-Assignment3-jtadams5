@@ -4,6 +4,7 @@ using Fall2024_Assignment3_jtadams5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fall2024_Assignment3_jtadams5.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028230639_AddReviews")]
+    partial class AddReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace Fall2024_Assignment3_jtadams5.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ActorMovie", b =>
+                {
+                    b.Property<int>("ActorsActorID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MoviesMovieID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ActorsActorID", "MoviesMovieID");
+
+                    b.HasIndex("MoviesMovieID");
+
+                    b.ToTable("ActorMovie");
+                });
 
             modelBuilder.Entity("Fall2024_Assignment3_jtadams5.Models.Actor", b =>
                 {
@@ -39,9 +57,6 @@ namespace Fall2024_Assignment3_jtadams5.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("imdbURL")
@@ -93,21 +108,6 @@ namespace Fall2024_Assignment3_jtadams5.Data.Migrations
                     b.HasKey("MovieID");
 
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("Fall2024_Assignment3_jtadams5.Models.MovieActor", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ActorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieId", "ActorId");
-
-                    b.HasIndex("ActorId");
-
-                    b.ToTable("MovieActors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -312,23 +312,19 @@ namespace Fall2024_Assignment3_jtadams5.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Fall2024_Assignment3_jtadams5.Models.MovieActor", b =>
+            modelBuilder.Entity("ActorMovie", b =>
                 {
-                    b.HasOne("Fall2024_Assignment3_jtadams5.Models.Actor", "Actor")
-                        .WithMany("MovieActors")
-                        .HasForeignKey("ActorId")
+                    b.HasOne("Fall2024_Assignment3_jtadams5.Models.Actor", null)
+                        .WithMany()
+                        .HasForeignKey("ActorsActorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Fall2024_Assignment3_jtadams5.Models.Movie", "Movie")
-                        .WithMany("MovieActors")
-                        .HasForeignKey("MovieId")
+                    b.HasOne("Fall2024_Assignment3_jtadams5.Models.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesMovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -380,16 +376,6 @@ namespace Fall2024_Assignment3_jtadams5.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Fall2024_Assignment3_jtadams5.Models.Actor", b =>
-                {
-                    b.Navigation("MovieActors");
-                });
-
-            modelBuilder.Entity("Fall2024_Assignment3_jtadams5.Models.Movie", b =>
-                {
-                    b.Navigation("MovieActors");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,59 +1,34 @@
 ﻿@model IEnumerable<Fall2024_Assignment3_jtadams5.Models.Actor>
+@{
+    ViewData["Title"] = "Actors Index";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies.css" />
+}
 
 @{
-    ViewData["Title"] = "Index";
+    // TODO: ADD HOVER PROPERTY THAT BLURS BACKGROUND AND ADDS DESCRIPTION OF MOVIE
 }
+<div class="index-container">
+    <h2 class="index-title">Actors List</h2>
+    <p style="text-align:center">
+        <a asp-action="Create" class="btn">Add an Actor</a>
+    </p>
 
-<h1>Index</h1>
+    <div class="movie-container">
+        @foreach (var movie in Model.OrderBy(o => o.Name))
+        {
+            <div class="movie-card">
+                <img src="@movie.photoURL" alt="@movie.Name Pic" class="movie-poster" />
+                <h4>@movie.Name</h4>
+                <div class="movie-actions">
+                    <a asp-action="Details" asp-route-id="@movie.ActorID" class="btn">Details</a>
+                    <a asp-action="Edit" asp-route-id="@movie.ActorID" class="btn">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@movie.ActorID" class="btn">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.imdbURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.photoURL)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.imdbURL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.photoURL)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ActorID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ActorID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ActorID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>

@@ -13,6 +13,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<Fall2024_Assignment3_jtadams5.Services.OpenAIService>(); // I don't know why i have to include Fall2024-stuff but thats what vs code said
 
 var app = builder.Build();
 

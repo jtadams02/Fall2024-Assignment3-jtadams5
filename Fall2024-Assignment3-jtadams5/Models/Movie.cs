@@ -9,6 +9,10 @@
         public string PosterURL { get; set; }
         public string imdbURL { get; set; }
 
-        public virtual ICollection<Actor> Actors { get; set; } = new List<Actor>();
+        // Try adding a short plot summary
+        public string? PlotSummary { get; set; }
+
+        public string? Reviews { get; set; }
+        public ICollection<MovieActor>? MovieActors { get; set; }
     }
 }
